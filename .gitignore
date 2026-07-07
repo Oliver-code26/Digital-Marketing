@@ -9,3 +9,6 @@ node_modules/
 cloudinary_python.txt
 kaggle.json
 .venv/
+.venv-1/
+Online_Advertising_Performance_Data.txt
+plot_campaign_data.py
