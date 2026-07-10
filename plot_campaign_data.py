@@ -1,7 +1,9 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
 DATA_PATH = "online_advertising_performance_data.csv"
+DEFAULT_OUTPUT_PATH = "jupyter_notebooks/Pie_chart_camp1.png"
 
 
 def load_dataset(path: str = DATA_PATH) -> pd.DataFrame:
@@ -9,8 +11,8 @@ def load_dataset(path: str = DATA_PATH) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def plot_camp1_engagement_by_banner_placement(dataset: pd.DataFrame, output_path: str = "camp1_engagement_pie_chart.png") -> None:
-    """Plot a pie chart for camp 1 using banner + placement and displays."""
+def plot_camp1_engagement_by_banner_placement(dataset: pd.DataFrame, output_path: str = DEFAULT_OUTPUT_PATH) -> None:
+    """Plot a pie chart for camp 1 using banner + placement and save it."""
     camp1 = dataset[dataset["campaign_number"] == "camp 1"].copy()
     camp1["displays"] = pd.to_numeric(camp1["displays"], errors="coerce").fillna(0).astype(int)
     camp1["group"] = camp1["banner"].astype(str) + " | " + camp1["placement"].astype(str)
@@ -32,6 +34,8 @@ def plot_camp1_engagement_by_banner_placement(dataset: pd.DataFrame, output_path
     fig = plt.gcf()
     fig.gca().add_artist(centre_circle)
     plt.tight_layout()
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     plt.savefig(output_path)
     plt.close(fig)
     print(f"Saved pie chart to {output_path}")
